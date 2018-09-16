@@ -12,7 +12,7 @@ import java.util.List;
 public class PurchaseController
 {
     @Autowired
-    private static final DAO dao = new AmazonPurchaseDAO();
+    private AmazonPurchaseDAO dao;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<AmazonPurchase> getPurchases()

@@ -12,21 +12,21 @@ public class AmazonPurchaseRowMapper implements RowMapper<AmazonPurchase>
     public AmazonPurchase mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         AmazonPurchase purchase = new AmazonPurchase();
-        purchase.setObjectId(rs.getInt("m_objectId"));
-        purchase.setOrderId(rs.getString("m_orderId"));
-        purchase.setOrderDate(rs.getDate("m_orderDate").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        purchase.setYear(rs.getInt("m_year"));
-        purchase.setMonth(rs.getInt("m_month"));
-        purchase.setTitle(rs.getString("m_title"));
-        purchase.setCategory(rs.getString("m_category"));
-        purchase.setItemCondition(rs.getString("m_itemCondition"));
-        purchase.setSeller(rs.getString("m_seller"));
-        purchase.setPrice(rs.getBigDecimal("m_price"));
-        purchase.setPurchase(rs.getBigDecimal("m_purchase"));
-        purchase.setQuantity(rs.getInt("m_quantity"));
-        purchase.setShippingAddress(rs.getString(rs.getString("m_shippingAddress")));
-        purchase.setTax(rs.getBigDecimal("m_tax"));
-        purchase.setItemTotal(rs.getBigDecimal("m_itemTotal"));
+        purchase.setObjectId(rs.getInt("OBJECT_ID"));
+        purchase.setOrderId(rs.getString("ORDER_ID"));
+        purchase.setOrderDate(rs.getDate("ORDER_DATE").toLocalDate());
+        purchase.setYear(rs.getInt("YEAR"));
+        purchase.setMonth(rs.getInt("MONTH"));
+        purchase.setTitle(rs.getString("TITLE"));
+        purchase.setCategory(rs.getString("CATEGORY"));
+        purchase.setItemCondition(rs.getString("ITEM_CONDITION"));
+        purchase.setSeller(rs.getString("SELLER"));
+        purchase.setPrice(rs.getBigDecimal("LIST_PRICE"));
+        purchase.setPurchase(rs.getBigDecimal("PURCHASE"));
+        purchase.setQuantity(rs.getInt("QUANTITY"));
+        purchase.setShippingAddress(rs.getString("SHIPPING_ADDRESS"));
+        purchase.setTax(rs.getBigDecimal("TAX"));
+        purchase.setItemTotal(rs.getBigDecimal("ITEM_TOTAL"));
 
         return purchase;
     }

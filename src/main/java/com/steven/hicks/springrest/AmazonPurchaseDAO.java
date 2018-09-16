@@ -2,13 +2,21 @@ package com.steven.hicks.springrest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
 {
     @Autowired
-    private JdbcTemplate m_jdbcTemplate;
+    JdbcTemplate m_jdbcTemplate;
+
+    @Override
+    public JdbcTemplate getJdbcTemplate()
+    {
+        return m_jdbcTemplate;
+    }
 
     @Override
     public List<AmazonPurchase> getItems()
