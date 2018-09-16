@@ -8,23 +8,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController(value = "/purchases")
+@RestController
+@RequestMapping("/purchases")
 public class PurchaseController
 {
     @Autowired
     private AmazonPurchaseDAO dao;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<AmazonPurchase> getPurchases()
     {
         List<AmazonPurchase> allPurchases = dao.getItems();
         return allPurchases;
     }
 
-    @RequestMapping("/id")
+    @RequestMapping(value = "/id")
     public AmazonPurchase getPurchase(@RequestParam(value = "id")int id)
     {
-        AmazonPurchase purchase = (AmazonPurchase)dao.getItem(id);
+        AmazonPurchase purchase = dao.getItem(id);
         return purchase;
     }
 

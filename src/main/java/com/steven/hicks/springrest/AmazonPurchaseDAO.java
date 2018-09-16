@@ -27,7 +27,7 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
     @Override
     public AmazonPurchase getItem(Object primaryKey)
     {
-        String query = "select * from purchases where objectId=?";
+        String query = "select * from purchases where OBJECT_ID=?";
         return m_jdbcTemplate.queryForObject(query,
                 new Object[]{primaryKey},
                 new AmazonPurchaseRowMapper());
