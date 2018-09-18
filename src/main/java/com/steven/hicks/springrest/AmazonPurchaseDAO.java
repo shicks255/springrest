@@ -1,5 +1,7 @@
 package com.steven.hicks.springrest;
 
+import com.steven.hicks.springrest.dataLayer.DAO;
+import com.steven.hicks.springrest.dataLayer.DatabaseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

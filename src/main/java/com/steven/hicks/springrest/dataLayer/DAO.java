@@ -1,4 +1,4 @@
-package com.steven.hicks.springrest;
+package com.steven.hicks.springrest.dataLayer;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

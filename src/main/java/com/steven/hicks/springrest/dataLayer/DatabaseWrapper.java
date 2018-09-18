@@ -1,4 +1,4 @@
-package com.steven.hicks.springrest;
+package com.steven.hicks.springrest.dataLayer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
