@@ -15,17 +15,17 @@ public class PurchaseController
     @Autowired
     private AmazonPurchaseDAO dao;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<AmazonPurchase> getPurchases()
     {
-        List<AmazonPurchase> allPurchases = dao.getItems();
+        List<AmazonPurchase> allPurchases = dao.getItems2();
         return allPurchases;
     }
 
     @RequestMapping(value = "/id")
     public AmazonPurchase getPurchase(@RequestParam(value = "id")int id)
     {
-        AmazonPurchase purchase = dao.getItem(id);
+        AmazonPurchase purchase = dao.getItem2(id);
         return purchase;
     }
 
