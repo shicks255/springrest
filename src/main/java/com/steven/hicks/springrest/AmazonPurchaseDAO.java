@@ -25,11 +25,6 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
     @Override
     public List<AmazonPurchase> getItems()
     {
-        return m_jdbcTemplate.query("select * from purchases", new AmazonPurchaseRowMapper());
-    }
-
-    public List<AmazonPurchase> getItems2()
-    {
         String query = "select * from purchases";
         return m_databaseWrapper.getObjects(query, new AmazonPurchaseRowMapper());
     }
@@ -38,17 +33,8 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
     public AmazonPurchase getItem(Object primaryKey)
     {
         String query = "select * from purchases where OBJECT_ID=?";
-        return m_jdbcTemplate.queryForObject(query,
-                new Object[]{primaryKey},
-                new AmazonPurchaseRowMapper());
-    }
-
-    public AmazonPurchase getItem2(Object primaryKey)
-    {
-        String query = "select * from purchases where OBJECT_ID=?";
         AmazonPurchase p =
                 (AmazonPurchase)m_databaseWrapper.getObject(query, new Object[]{primaryKey}, new AmazonPurchaseRowMapper());
-
         return p;
     }
 

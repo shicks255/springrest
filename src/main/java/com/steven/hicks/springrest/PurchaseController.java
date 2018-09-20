@@ -1,10 +1,7 @@
 package com.steven.hicks.springrest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,18 +12,42 @@ public class PurchaseController
     @Autowired
     private AmazonPurchaseDAO dao;
 
+//    GET ALL PURCHASES
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<AmazonPurchase> getPurchases()
     {
-        List<AmazonPurchase> allPurchases = dao.getItems2();
+        List<AmazonPurchase> allPurchases = dao.getItems();
         return allPurchases;
     }
 
-    @RequestMapping(value = "/id")
-    public AmazonPurchase getPurchase(@RequestParam(value = "id")int id)
+//    MAKE A PURCHASE
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public void makePurchase()
     {
-        AmazonPurchase purchase = dao.getItem2(id);
+
+    }
+
+//    GET A PURCHASE
+    @RequestMapping("/{id}")
+    public AmazonPurchase getPurchase(@PathVariable("id")int id)
+    {
+        AmazonPurchase purchase = dao.getItem(id);
         return purchase;
+    }
+
+//    UPDATE A PURCHASE
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public AmazonPurchase updateAndGetPurchase(@PathVariable("id")int id)
+    {
+
+        return null;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deletePurchase(@PathVariable("id")int id)
+    {
+        AmazonPurchase purchase = dao.getItem(id);
+        //then delete the purchase, need dao logic
     }
 
 }
