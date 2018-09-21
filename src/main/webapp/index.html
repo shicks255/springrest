@@ -30,6 +30,13 @@
                     var purchase = JSON.parse(xhttp.responseText);
                     if (purchase)
                     {
+                        var form = document.createElement("form");
+                        form.setAttribute("method", "PUT");
+                        form.setAttribute("name", "frmUpdatePurchase");
+                        form.setAttribute("id", "frmUpdatePurchase");
+                        form.setAttribute("action", "/purchases/" + purchase['objectId']);
+
+
                         var table = document.createElement("table");
 
                         for (i in purchase)
@@ -37,23 +44,58 @@
                             var tr = document.createElement('tr');
                             var td1 = document.createElement('td');
                             var td2 = document.createElement('td');
+
+                            var input = document.createElement('input');
+                            input.setAttribute("type", "text");
+                            input.setAttribute("name", i);
+                            input.setAttribute("id", i);
+                            input.setAttribute("value", purchase[i]);
+
                             var text = document.createTextNode(i);
                             var text2 = document.createTextNode(purchase[i]);
 
+                            input.appendChild(text2)
+                            td2.appendChild(input);
                             td1.appendChild(text);
-                            td2.appendChild(text2);
                             tr.appendChild(td1);
                             tr.appendChild(td2);
                             table.appendChild(tr);
                         }
 
+                        var editButton = document.createElement('button');
+                        editButton.innerText = 'Update';
+                        editButton.onclick = () =>
+                        {
+                            console.log(this);
+                            console.log('hi');
+                        };
                         var box = document.getElementById('idSearchResponseBox');
-                        box.appendChild(table);
+
+                        form.appendChild(table);
+                        box.appendChild(form);
+                        box.appendChild(editButton);
+
                     }
                 }
             }
             xhttp.open("GET", "/purchases/" + purchaseId, true);
             xhttp.send();
+        }
+
+        function searchForText(element)
+        {
+            var searchTerms = element.value;
+
+            var xhhtp = new XMLHttpRequest();
+            xhhtp.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+
+                }
+            };
+            xhhtp.open("GET", "/purchases/search?searchTerms=" + searchTerms);
+            xhhtp.send();
         }
 
     </script>
@@ -71,7 +113,11 @@
 <label for="textSearch">Search for a Purchase</label>
 <br/>
 <input type="text" name="textSearch" id="textSearch" placeholder="Enter a search value">
-<button value="Search" onclick="">Search</button>
+<button value="Search" onclick="searchForText(this.previousElementSibling);">Search</button>
+<div id="textSearchResponseBox" name="textSearchResponseBox"/>
+<hr>
+
+
 
 </body>
 </html>
