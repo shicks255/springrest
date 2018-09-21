@@ -3,13 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Test The Amazon Purchases Rest Service</title>
+
+    <script>
+
+        function searchForId(element)
+        {
+            if (isNaN(element.value))
+            {
+                alert('Must be a numeric value');
+                element.value = '';
+                return;
+            }
+
+            var purchaseId = element.value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    var purchase = JSON.parse(xhttp.responseText);
+                }
+            }
+            xhttp.open("GET", "/purchases/" + purchaseId, true);
+            xhttp.send();
+        }
+
+    </script>
 </head>
 <body>
 
 
+<label for="idSearch">Search for a Purchase</label>
+<br/>
+<input type="text" name="idSearch" id="idSearch" placeholder="Enter an Object Id">
+<button value="Search" onclick="searchForId(this.previousElementSibling);">Search</button>
 
+<hr>
 
-
+<label for="textSearch">Search for a Purchase</label>
+<br/>
+<input type="text" name="textSearch" id="textSearch" placeholder="Enter a search value">
+<button value="Search" onclick="">Search</button>
 
 </body>
 </html>
