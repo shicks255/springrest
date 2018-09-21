@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Test The Amazon Purchases Rest Service</title>
 
+    <style>
+        table td{
+            border : 1px solid black;
+        }
+    </style>
+
     <script>
 
         function searchForId(element)
@@ -22,6 +28,28 @@
                 if (this.readyState == 4 && this.status == 200)
                 {
                     var purchase = JSON.parse(xhttp.responseText);
+                    if (purchase)
+                    {
+                        var table = document.createElement("table");
+
+                        for (i in purchase)
+                        {
+                            var tr = document.createElement('tr');
+                            var td1 = document.createElement('td');
+                            var td2 = document.createElement('td');
+                            var text = document.createTextNode(i);
+                            var text2 = document.createTextNode(purchase[i]);
+
+                            td1.appendChild(text);
+                            td2.appendChild(text2);
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            table.appendChild(tr);
+                        }
+
+                        var box = document.getElementById('idSearchResponseBox');
+                        box.appendChild(table);
+                    }
                 }
             }
             xhttp.open("GET", "/purchases/" + purchaseId, true);
@@ -37,7 +65,7 @@
 <br/>
 <input type="text" name="idSearch" id="idSearch" placeholder="Enter an Object Id">
 <button value="Search" onclick="searchForId(this.previousElementSibling);">Search</button>
-
+<div id="idSearchResponseBox" name="idSearchResponseBox"></div>
 <hr>
 
 <label for="textSearch">Search for a Purchase</label>
