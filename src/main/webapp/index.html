@@ -35,7 +35,7 @@
                         form.setAttribute("name", "frmUpdatePurchase");
                         form.setAttribute("id", "frmUpdatePurchase");
                         form.setAttribute("action", "/purchases/" + purchase['objectId']);
-
+                        form.setAttribute("Content-type", "application/x-www-form-urlencoded");
 
                         var table = document.createElement("table");
 
@@ -66,8 +66,15 @@
                         editButton.innerText = 'Update';
                         editButton.onclick = () =>
                         {
-                            console.log(this);
-                            console.log('hi');
+                            var xhttpPut = new XMLHttpRequest();
+                            var formData = new FormData(form);
+
+                            console.log(xhttpPut);
+                            console.log(formData);
+
+                            xhttpPut.open('POST', '/purchases/' + purchase['objectId']);
+                            xhttpPut.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+                            xhttpPut.send(formData);
                         };
 
                         var deleteButton = document.createElement('button');
@@ -82,6 +89,7 @@
                         form.appendChild(table);
                         box.appendChild(form);
                         box.appendChild(editButton);
+                        box.appendChild(deleteButton);
 
                     }
                 }

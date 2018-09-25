@@ -1,6 +1,8 @@
 package com.steven.hicks.springrest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class PurchaseController
     }
 
 //    GET A PURCHASE
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public AmazonPurchase getPurchase(@PathVariable("id")int id)
     {
         AmazonPurchase purchase = dao.getItem(id);
@@ -36,8 +38,9 @@ public class PurchaseController
     }
 
 //    UPDATE A PURCHASE
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public AmazonPurchase updateAndGetPurchase(@PathVariable("id")int id)
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public AmazonPurchase updateAndGetPurchase(@RequestBody MultiValueMap<String, String> form)
     {
 
         return null;
