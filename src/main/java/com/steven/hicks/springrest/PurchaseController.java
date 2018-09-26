@@ -5,7 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/purchases")
@@ -38,10 +40,13 @@ public class PurchaseController
     }
 
 //    UPDATE A PURCHASE
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public AmazonPurchase updateAndGetPurchase(@RequestBody MultiValueMap<String, String> form)
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public AmazonPurchase updateAndGetPurchase(@RequestParam MultiValueMap<String, Object> form,
+                                               HttpServletRequest request)
     {
+        Set<String> en = form.keySet();
 
         return null;
     }
@@ -50,7 +55,8 @@ public class PurchaseController
     public void deletePurchase(@PathVariable("id")int id)
     {
         AmazonPurchase purchase = dao.getItem(id);
-        //then delete the purchase, need dao logic
+        if (purchase != null)
+            dao.deleteItem(id);
     }
 
 }

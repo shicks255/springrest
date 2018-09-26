@@ -12,15 +12,7 @@ import java.util.List;
 public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
 {
     @Autowired
-    JdbcTemplate m_jdbcTemplate;
-    @Autowired
     DatabaseWrapper m_databaseWrapper;
-
-    @Override
-    public JdbcTemplate getJdbcTemplate()
-    {
-        return m_jdbcTemplate;
-    }
 
     @Override
     public List<AmazonPurchase> getItems()
@@ -39,11 +31,16 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
     }
 
     @Override
+    public void deleteItem(Object primaryKey)
+    {
+        String query = "delete from purchases where OBJECT_ID=?";
+        m_databaseWrapper.executeDelete(query, primaryKey);
+    }
+
+    @Override
     public List<AmazonPurchase> queryForItems(String query, Object[] args)
     {
-        return m_jdbcTemplate.query(query,
-                args,
-                new AmazonPurchaseRowMapper());
+        return null;
     }
 }
 

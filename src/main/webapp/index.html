@@ -14,6 +14,10 @@
 
         function searchForId(element)
         {
+            var containingBox = document.getElementById('idSearchResponseBox');
+            while (containingBox.firstChild)
+                containingBox.removeChild(containingBox.firstChild);
+
             if (isNaN(element.value))
             {
                 alert('Must be a numeric value');
@@ -31,12 +35,6 @@
                     if (purchase)
                     {
                         var form = document.createElement("form");
-                        form.setAttribute("method", "PUT");
-                        form.setAttribute("name", "frmUpdatePurchase");
-                        form.setAttribute("id", "frmUpdatePurchase");
-                        form.setAttribute("action", "/purchases/" + purchase['objectId']);
-                        form.setAttribute("Content-type", "application/x-www-form-urlencoded");
-
                         var table = document.createElement("table");
 
                         for (i in purchase)
@@ -66,22 +64,26 @@
                         editButton.innerText = 'Update';
                         editButton.onclick = () =>
                         {
-                            var xhttpPut = new XMLHttpRequest();
-                            var formData = new FormData(form);
+                            var http = new XMLHttpRequest();
+                            http.open('POST', '/purchases/' + purchase['objectId']);
+                            http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-                            console.log(xhttpPut);
-                            console.log(formData);
+                            var pairs = [];
+                            for (i in purchase)
+                                pairs.push(encodeURIComponent(i) + '=' + encodeURIComponent(purchase[i]));
 
-                            xhttpPut.open('POST', '/purchases/' + purchase['objectId']);
-                            xhttpPut.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-                            xhttpPut.send(formData);
+                            var data = pairs.join('&').replace('/%20/g', '+');
+                            http.send(data);
                         };
 
                         var deleteButton = document.createElement('button');
                         deleteButton.innerText = 'Delete';
                         deleteButton.onclick = () =>
                         {
+                            var http = new XMLHttpRequest();
+                            http.open('DELETE', '/purchases/' + purchase['objectId']);
 
+                            http.send();
                         };
 
                         var box = document.getElementById('idSearchResponseBox');
@@ -133,6 +135,13 @@
 <div id="textSearchResponseBox" name="textSearchResponseBox"/>
 <hr>
 
+<form method="post" action="/purchases/2">
+
+    <input type="text" name="test" id="test" value="Amanda"/>
+
+    <button type="submit" value="Submit">Submit</button>
+
+</form>
 
 
 </body>

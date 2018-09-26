@@ -23,5 +23,14 @@ public class DatabaseWrapper<T>
         return m_jdbcTemplate.query(query, rowMapper);
     }
 
+    public void executeDelete(String query, Object objectId)
+    {
+        m_jdbcTemplate.update(query, objectId);
+    }
+
+    public List<T> queryForItems(String query, Object[] args, RowMapper<T> rowMapper)
+    {
+        return m_jdbcTemplate.query(query, args, rowMapper);
+    }
 
 }
