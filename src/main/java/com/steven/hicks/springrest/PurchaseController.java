@@ -5,7 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -43,10 +44,34 @@ public class PurchaseController
     @RequestMapping(value = "/{id}",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public AmazonPurchase updateAndGetPurchase(@RequestParam MultiValueMap<String, Object> form,
-                                               HttpServletRequest request)
+    public AmazonPurchase updateAndGetPurchase(@RequestParam MultiValueMap<String,
+            Object> form, @PathVariable("id")int id)
     {
-        Set<String> en = form.keySet();
+        Set<String> formFields = form.keySet();
+
+        AmazonPurchase purchase = dao.getItem(id);
+
+        try
+        {
+            Class clazz = Class.forName("com.steven.hicks.springrest.AmazonPurchase");
+            if (clazz != null)
+            {
+                List<Method> methods = Arrays.asList(clazz.getDeclaredMethods());
+                for (Method method : methods)
+                {
+                    if (method.getName().contains("set"));
+                    {
+                        String requestName = method.getName();
+                        requestName = requestName.replace("set", "");
+
+                    }
+                }
+            }
+        }
+        catch (ClassNotFoundException e)
+        {
+
+        }
 
         return null;
     }
