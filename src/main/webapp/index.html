@@ -35,74 +35,10 @@
                 {
                     var purchase = JSON.parse(xhttp.responseText);
                     if (purchase)
-                    {
-                        var form = document.createElement("form");
-                        var table = document.createElement("table");
-
-                        for (i in purchase)
-                        {
-                            var tr = document.createElement('tr');
-                            var td1 = document.createElement('td');
-                            var td2 = document.createElement('td');
-
-                            var input = document.createElement('input');
-                            input.setAttribute("type", "text");
-                            input.setAttribute("name", i);
-                            input.setAttribute("id", i);
-                            input.setAttribute("value", purchase[i]);
-                            if (i === 'objectId')
-                                input.setAttribute('readOnly', true);
-
-                            var text = document.createTextNode(i);
-                            var text2 = document.createTextNode(purchase[i]);
-
-                            input.appendChild(text2)
-                            td2.appendChild(input);
-                            td1.appendChild(text);
-                            tr.appendChild(td1);
-                            tr.appendChild(td2);
-                            table.appendChild(tr);
-                        }
-
-                        var editButton = document.createElement('button');
-                        editButton.innerText = 'Update';
-                        editButton.onclick = () =>
-                        {
-                            var http = new XMLHttpRequest();
-                            http.open('POST', '/purchases/' + purchase['objectId']);
-                            http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                            var pairs = [];
-                            for (i in purchase)
-                                pairs.push(encodeURIComponent(i) + '=' + encodeURIComponent(purchase[i]));
-
-                            var data = pairs.join('&').replace('/%20/g', '+');
-                            http.send(data);
-                        };
-
-                        var deleteButton = document.createElement('button');
-                        deleteButton.innerText = 'Delete';
-                        deleteButton.onclick = () =>
-                        {
-                            var http = new XMLHttpRequest();
-                            http.open('DELETE', '/purchases/' + purchase['objectId']);
-                            http.send();
-
-                            location.reload();
-                        };
-
-                        var box = document.getElementById('idSearchResponseBox');
-
-                        form.appendChild(table);
-                        box.appendChild(form);
-                        box.appendChild(editButton);
-                        box.appendChild(deleteButton);
-
-                    }
+                        createTable(purchase);
                 }
-                else if (this.readyState ===4 && this.status !== 200)
+                else if (this.readyState === 4 && this.status !== 200)
                 {
-                    console.log(this);
                     var error = document.createElement('div');
                     error.innerText = 'Something went wrong, try again';
                     containingBox.appendChild(error);
@@ -124,6 +60,76 @@
             };
             xhhtp.open("GET", "/purchases/search?searchTerms=" + searchTerms);
             xhhtp.send();
+        }
+
+        function createTable(purchase)
+        {
+            var form = document.createElement("form");
+            var table = document.createElement("table");
+
+            for (i in purchase)
+            {
+                var tr = document.createElement('tr');
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+
+                var input = document.createElement('input');
+                input.setAttribute("type", "text");
+                input.setAttribute("name", i);
+                input.setAttribute("id", i);
+                input.setAttribute("value", purchase[i]);
+                if (i === 'objectId')
+                    input.setAttribute('readOnly', true);
+
+                var text = document.createTextNode(i);
+                var text2 = document.createTextNode(purchase[i]);
+
+                input.appendChild(text2)
+                td2.appendChild(input);
+                td1.appendChild(text);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                table.appendChild(tr);
+            }
+
+            var editButton = document.createElement('button');
+            editButton.innerText = 'Update';
+            editButton.onclick = () =>
+            {
+                var http = new XMLHttpRequest();
+                http.open('POST', '/purchases/' + purchase['objectId']);
+                http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                var pairs = [];
+                for (i in purchase)
+                    pairs.push(encodeURIComponent(i) + '=' + encodeURIComponent(purchase[i]));
+
+                var data = pairs.join('&').replace('/%20/g', '+');
+                http.send(data);
+            };
+
+            var deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Delete';
+            deleteButton.onclick = () =>
+            {
+                var http = new XMLHttpRequest();
+                http.open('DELETE', '/purchases/' + purchase['objectId']);
+                http.send();
+
+                location.reload();
+            };
+
+            var clearButton = document.createElement('button');
+            clearButton.innerText = 'Reset';
+            clearButton.onclick = () => location.reload();
+
+            var box = document.getElementById('idSearchResponseBox');
+
+            form.appendChild(table);
+            box.appendChild(form);
+            box.appendChild(editButton);
+            box.appendChild(deleteButton);
+            box.appendChild(clearButton);
         }
 
     </script>
