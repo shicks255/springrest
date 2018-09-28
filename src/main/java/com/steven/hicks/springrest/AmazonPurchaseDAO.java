@@ -1,5 +1,6 @@
 package com.steven.hicks.springrest;
 
+import com.steven.hicks.springrest.dataLayer.Cache;
 import com.steven.hicks.springrest.dataLayer.DAO;
 import com.steven.hicks.springrest.dataLayer.DatabaseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,27 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
     @Override
     public AmazonPurchase getItem(Object primaryKey)
     {
+        boolean updateCache;
+        if (Cache.existsInCache((Integer)primaryKey))
+            return Cache.getFromcache((Integer) primaryKey);
+        else
+            updateCache = true;
+
         String query = "SELECT * from purchases WHERE OBJECT_ID=?";
         AmazonPurchase p =
                 (AmazonPurchase)m_databaseWrapper.getObject(query, new Object[]{primaryKey}, new AmazonPurchaseRowMapper());
+
+        try
+        {
+            //going to simulate a slow database, to show the importance of caching
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e)
+        {}
+
+        if (updateCache)
+            Cache.addToCache(p);
+
         return p;
     }
 

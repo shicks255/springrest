@@ -37,7 +37,9 @@ public class PurchaseController
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public AmazonPurchase getPurchase(@PathVariable("id")int id)
     {
+        long currentTime = System.currentTimeMillis();
         AmazonPurchase purchase = dao.getItem(id);
+        System.out.println("Took " + (System.currentTimeMillis()-currentTime));
         return purchase;
     }
 
@@ -48,7 +50,6 @@ public class PurchaseController
     public AmazonPurchase updateAndGetPurchase(@RequestParam MultiValueMap<String,
             Object> form, @PathVariable("id")int id)
     {
-        Set<String> formFields = form.keySet();
         AmazonPurchase purchase = dao.getItem(id);
 
         Integer month = Integer.valueOf((String)form.get("month").get(0));
