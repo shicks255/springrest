@@ -5,11 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -99,7 +97,7 @@ public class PurchaseController
 
         dao.updateItem(purchase);
 
-        return null;
+        return purchase;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

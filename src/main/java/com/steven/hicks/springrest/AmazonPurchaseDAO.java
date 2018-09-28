@@ -51,7 +51,7 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
                                     item.getPrice(), item.getPurchase(), item.getQuantity(), item.getShippingAddress(),
                                     item.getTax(), item.getItemTotal(), item.getObjectId()};
 
-//        m_databaseWrapper.update(query, args);
+        m_databaseWrapper.update(query, args);
     }
 
     @Override

@@ -103,7 +103,7 @@
 
                 var pairs = [];
                 for (i in purchase)
-                    pairs.push(encodeURIComponent(i) + '=' + encodeURIComponent(purchase[i]));
+                    pairs.push(encodeURIComponent(i) + '=' + encodeURIComponent(document.getElementById(i).value));
 
                 var data = pairs.join('&').replace('/%20/g', '+');
                 http.send(data);
