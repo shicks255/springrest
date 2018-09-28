@@ -33,4 +33,9 @@ public class DatabaseWrapper<T>
         return m_jdbcTemplate.query(query, args, rowMapper);
     }
 
+    public void update(String query, Object[] args)
+    {
+        m_jdbcTemplate.update(query, args);
+    }
+
 }

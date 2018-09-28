@@ -11,4 +11,5 @@ public interface DAO<T>
     T getItem(Object primaryKey);
     List<T> queryForItems(String query, Object[] args);
     void deleteItem(Object primaryKey);
+    void updateItem(T item);
 }
