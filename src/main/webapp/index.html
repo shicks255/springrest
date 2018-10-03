@@ -13,7 +13,7 @@
 
     <script>
 
-        function searchForId(element)
+        function searchForId(element, responseBox)
         {
             var containingBox = document.getElementById('idSearchResponseBox');
             while (containingBox.firstChild)
@@ -35,8 +35,10 @@
                 if (this.readyState == 4 && this.status == 200)
                 {
                     var purchase = JSON.parse(xhttp.responseText);
-                    if (purchase)
+                    if (purchaseId)
                         createTable(purchase);
+                    if (!purchaseId)
+                        createList(purchase, responseBox);
                 }
                 else if (this.readyState === 4 && this.status !== 200)
                 {
@@ -47,20 +49,53 @@
             }
         }
 
-        function searchForText(element)
+        function searchForText(element, responseBox)
         {
             var searchTerms = element.value;
 
             var xhhtp = new XMLHttpRequest();
+            xhhtp.open("GET", "/purchases/search?searchTerms=" + searchTerms);
+            xhhtp.send();
             xhhtp.onreadystatechange = function()
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
-
+                    var purchases = JSON.parse(xhhtp.responseText);
+                    createList(purchases, responseBox);
                 }
             };
-            xhhtp.open("GET", "/purchases/search?searchTerms=" + searchTerms);
-            xhhtp.send();
+        }
+
+        function createList(purchases, responseBox)
+        {
+            var table = document.createElement("table");
+
+            let newRow = document.createElement('tr');
+            let newCell = document.createElement('td');
+            let newCell2 = document.createElement('td');
+
+            newCell.innerText = 'Object Id';
+            newCell2.innerText = 'Title';
+            newRow.appendChild(newCell);
+            newRow.appendChild(newCell2);
+            table.append(newRow);
+
+            for (i of purchases)
+            {
+                let newRow = document.createElement('tr');
+                let newCell = document.createElement('td');
+                let newCell2 = document.createElement('td');
+
+                newCell.innerText = i.objectId;
+                newCell2.innerText = i.title;
+                newRow.appendChild(newCell);
+                newRow.appendChild(newCell2);
+
+                table.appendChild(newRow);
+            }
+
+            var box = document.getElementById(responseBox);
+            box.appendChild(table);
         }
 
         function createTable(purchase)
@@ -137,28 +172,23 @@
 </head>
 <body>
 
-
-<label for="idSearch">Search for a Purchase</label>
-<br/>
-<input type="text" name="idSearch" id="idSearch" placeholder="Enter an Object Id">
-<button value="Search" id="searchForIdButton" name="searchForIdButton" onclick="searchForId(this.previousElementSibling);">Search</button>
-<div id="idSearchResponseBox" name="idSearchResponseBox"></div>
+<div>
+    <label for="idSearch">Search for a Purchase</label>
+    <br/>
+    <input type="text" name="idSearch" id="idSearch" placeholder="Enter an Object Id">
+    <button value="Search" id="searchForIdButton" name="searchForIdButton" onclick="searchForId(this.previousElementSibling, 'idSearchResponseBox');">Search</button>
+    <div id="idSearchResponseBox" name="idSearchResponseBox" class="responseBox"></div>
+</div>
 <hr>
 
-<label for="textSearch">Search for a Purchase</label>
-<br/>
-<input type="text" name="textSearch" id="textSearch" placeholder="Enter a search value">
-<button value="Search" onclick="searchForText(this.previousElementSibling);">Search</button>
-<div id="textSearchResponseBox" name="textSearchResponseBox"/>
+<div>
+    <label for="textSearch">Search for a Purchase</label>
+    <br/>
+    <input type="text" name="textSearch" id="textSearch" placeholder="Enter a search value">
+    <button value="Search" onclick="searchForText(this.previousElementSibling, 'textSearchResponseBox');">Search</button>
+    <div id="textSearchResponseBox" name="textSearchResponseBox" class="responseBox"></div>
+</div>
 <hr>
-
-<form method="post" action="/purchases/2">
-
-    <input type="text" name="test" id="test" value="Amanda"/>
-
-    <button type="submit" value="Submit">Submit</button>
-
-</form>
 
 
 </body>

@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/purchases")
@@ -101,12 +100,23 @@ public class PurchaseController
         return purchase;
     }
 
+//    DELETE A PURCHASE
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deletePurchase(@PathVariable("id")int id)
     {
         AmazonPurchase purchase = dao.getItem(id);
         if (purchase != null)
             dao.deleteItem(id);
+    }
+
+//    SEARCH BY KEYWORD
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public List<AmazonPurchase> search(@RequestParam("searchTerms") String searchterms)
+    {
+        String query = "SELECT * from purchases where title like ?";
+        Object[] args = new Object[]{"%" + searchterms + "%"};
+
+        return dao.queryForItems(query, args);
     }
 
 }

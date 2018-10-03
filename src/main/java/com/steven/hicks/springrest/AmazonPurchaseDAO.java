@@ -76,7 +76,7 @@ public class AmazonPurchaseDAO implements DAO<AmazonPurchase>
     @Override
     public List<AmazonPurchase> queryForItems(String query, Object[] args)
     {
-        return null;
+        List<AmazonPurchase> purchases = m_databaseWrapper.queryForItems(query, args, new AmazonPurchaseRowMapper());
+        return purchases;
     }
 }
-
