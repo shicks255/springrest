@@ -168,6 +168,12 @@
             box.appendChild(clearButton);
         }
 
+        function showCreatePurchase(responseBox)
+        {
+
+
+        }
+
     </script>
 </head>
 <body>
@@ -189,6 +195,65 @@
     <div id="textSearchResponseBox" name="textSearchResponseBox" class="responseBox"></div>
 </div>
 <hr>
+
+<div>
+    <label>Create a Purchase</label>
+    <br/>
+    <button value="Create" onclick="document.getElementById('createButtonResponseBox').style = 'display:inline;'">Create</button>
+    <div id="createButtonResponseBox" name="createButtonResponseBox" style="display:none;">
+        <form>
+
+            <table>
+                <tr>
+                    <td><label for="createMonth">Month</label></td>
+                    <td><input type="text" value="" name="createMonth" id="createMonth"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createYear">Year</label></td>
+                    <td><input type="text" value="" name="createYear" id="createYear"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createShippingAddress">Shipping Address</label></td>
+                    <td><input type="text" value="" name="createShippingAddress" id="createShippingAddress"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createSeller">Seller</label></td>
+                    <td><input type="text" value="" name="createSeller" id="createSeller"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createCategory">Category</label></td>
+                    <td><input type="text" value="" name="createCategory" id="createCategory"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createItemCondition">Item Condition</label></td>
+                    <td><input type="text" value="" name="createItemCondition" id="createItemCondition"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createOrderDate">Date</label></td>
+                    <td><input type="text" value="" name="createOrderDate" id="createOrderDate"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createTitle">Title</label></td>
+                    <td><input type="text" value="" name="createTitle" id="createTitle"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createTax">Tax</label></td>
+                    <td><input type="text" value="" name="createTax" id="createTax"/></td>
+                </tr>
+                <tr>
+                    <td><label for="createQuantity">Quantity</label></td>
+                    <td><input type="text" value="" name="createQuantity" id="createQuantity"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Submit"></td>
+                </tr>
+
+            </table>
+
+
+        </form>
+    </div>
+</div>
 
 
 </body>
